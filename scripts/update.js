@@ -65,7 +65,8 @@ const output = {
     battlesPerPlayer: 30,
   },
   methodology: {
-    deckIdentity: "8 main cards + tower card; main-card order ignored; evolutionLevel is part of card state",
+    deckIdentity: "8 main cards + tower card; main-card order ignored after positional Hero/Evolution classification; cardType and evolutionLevel are part of card state",
+    cardTypeDetection: "positional; raw API order is preserved; slot 1 = evolution, slot 2 = hero, slot 3 = hero when slot 2 is not hero otherwise evolution; slots 4-8 = normal; iconUrls are not used for classification",
     battleFilter: "pathOfLegend only",
     towerCardSource: "participant.supportCards[0]",
     ranking: ["adjustedWinRate", "games", "winRate"],
