@@ -58,13 +58,16 @@ const output = {
   generatedAt: new Date().toISOString(),
   source: {
     ranking: "global_path_of_legend",
+    battleType: "pathOfLegend",
     playersRequested: playerLimit,
     playersCollected: uniquePlayers.length,
     battlelogsFailed: failed,
     battlesPerPlayer: 30,
   },
   methodology: {
-    deckIdentity: "8 main cards; tower card excluded; evolutionLevel is part of card state",
+    deckIdentity: "8 main cards + tower card; main-card order ignored; evolutionLevel is part of card state",
+    battleFilter: "pathOfLegend only",
+    towerCardSource: "participant.supportCards[0]",
     ranking: ["adjustedWinRate", "games", "winRate"],
     minimumGames: Number(process.env.MIN_DECK_GAMES || 20),
     perPlayerDeckCap: Number(process.env.PLAYER_DECK_CAP || 10),
