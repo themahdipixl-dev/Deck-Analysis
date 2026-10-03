@@ -26,23 +26,29 @@ function normalizeCard(card, cardType = "normal") {
 }
 
 function classifyMainDeckCards(cards) {
-  // Raw API order is authoritative for Hero/Evolution classification.
-  // Do not inspect iconUrls or evolutionLevel: every card can expose those
-  // assets/fields, so only the positional rules determine cardType.
+  // Match the Current Deck logic in My Royale:
+  // Slot 1: Evolution only.
+  // Slot 2: Hero only.
+  // Slot 3: Hero when Slot 2 is not a Hero; otherwise Evolution.
+  // Slots 4-8: Normal only.
+  //
+  // Hero/Evolution state is determined from the raw API card fields/assets,
+  // exactly like Current Deck. Do not infer type from evolutionLevel alone.
   if (!Array.isArray(cards) || cards.length !== 8) return null;
 
   const classified = cards.map((card, index) => {
     let cardType = "normal";
 
     if (index === 0) {
-      // Slot 1 is always the Evolution slot.
+      // Slot 1: Evolution only.
       cardType = "evolution";
     } else if (index === 1) {
-      // Slot 2 is always the Hero slot.
-      cardType = "hero";
+      // Slot 2: use the Hero asset when the API says this card has one.
+      cardType = card?.iconUrls?.heroMedium ? "hero" : "normal";
     } else if (index === 2) {
-      // Slot 2 is the Hero slot, so slot 3 is the Evolution slot.
-      cardType = "evolution";
+      // Slot 3 depends on whether Slot 2 is actually a Hero.
+      const secondCardIsHero = Boolean(cards[1]?.iconUrls?.heroMedium);
+      cardType = secondCardIsHero ? "evolution" : "hero";
     }
 
     return normalizeCard(card, cardType);
