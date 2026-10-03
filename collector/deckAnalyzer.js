@@ -15,8 +15,16 @@ function cardKey(card) {
   return String(id) + ":" + cardType + ":" + evolutionLevel;
 }
 
-function normalizeCard(card, cardType = "normal") {
+function cardTypeFromEvolutionLevel(card) {
+  const level = Number(card?.evolutionLevel);
+  if (level === 1) return "evolution";
+  if (level === 2) return "hero";
+  return "normal";
+}
+
+function normalizeCard(card) {
   const iconUrls = (card && card.iconUrls) || {};
+  const cardType = cardTypeFromEvolutionLevel(card);
   const iconUrl =
     cardType === "evolution"
       ? (iconUrls.evolutionMedium || iconUrls.medium || null)
@@ -34,35 +42,8 @@ function normalizeCard(card, cardType = "normal") {
 }
 
 function classifyMainDeckCards(cards) {
-  // Match the Current Deck logic in My Royale:
-  // Slot 1: Evolution only.
-  // Slot 2: Hero only.
-  // Slot 3: Hero when Slot 2 is not a Hero; otherwise Evolution.
-  // Slots 4-8: Normal only.
-  //
-  // Hero/Evolution state is determined from the raw API card fields/assets,
-  // exactly like Current Deck. Do not infer type from evolutionLevel alone.
   if (!Array.isArray(cards) || cards.length !== 8) return null;
-
-  const classified = cards.map((card, index) => {
-    let cardType = "normal";
-
-    if (index === 0) {
-      // Slot 1: Evolution only.
-      cardType = "evolution";
-    } else if (index === 1) {
-      // Slot 2: use the Hero asset when the API says this card has one.
-      cardType = card?.iconUrls?.heroMedium ? "hero" : "normal";
-    } else if (index === 2) {
-      // Slot 3 depends on whether Slot 2 is actually a Hero.
-      const secondCardIsHero = Boolean(cards[1]?.iconUrls?.heroMedium);
-      cardType = secondCardIsHero ? "evolution" : "hero";
-    }
-
-    return normalizeCard(card, cardType);
-  });
-
-  return classified;
+  return cards.map((card) => normalizeCard(card));
 }
 
 function extractTowerCard(participant) {
