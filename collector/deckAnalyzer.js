@@ -6,17 +6,48 @@ const DEFAULT_PLAYER_CAP = 10;
 function cardKey(card) {
   const id = card && (card.id != null ? card.id : card.name);
   if (id == null) return null;
-  const mode = card && Number.isFinite(card.evolutionLevel) ? card.evolutionLevel : 0;
-  return String(id) + ":" + mode;
+
+  const evolutionLevel = card && Number.isFinite(card.evolutionLevel)
+    ? card.evolutionLevel
+    : 0;
+  const cardType = card && card.cardType ? card.cardType : "normal";
+
+  return String(id) + ":" + cardType + ":" + evolutionLevel;
 }
 
-function normalizeCard(card) {
+function normalizeCard(card, cardType = "normal") {
   return {
     id: card && card.id != null ? card.id : null,
     name: String((card && card.name) || "Unknown"),
     evolutionLevel: card && Number.isFinite(card.evolutionLevel) ? card.evolutionLevel : 0,
+    cardType,
     iconUrl: (card && card.iconUrls && card.iconUrls.medium) || null,
   };
+}
+
+function classifyMainDeckCards(cards) {
+  // The raw API order is meaningful. Classification must happen before
+  // any sorting because the first three slots determine Hero/Evolution state:
+  // slot 1 = Evolution, slot 2 = Hero, slot 3 = Hero when slot 2 is not
+  // Hero, otherwise Evolution. Slots 4-8 are always normal.
+  if (!Array.isArray(cards) || cards.length !== 8) return null;
+
+  const slotTwoIsHero = false; // slot 2 is unconditionally the Hero slot.
+  const classified = cards.map((card, index) => {
+    let cardType = "normal";
+
+    if (index === 0) {
+      cardType = "evolution";
+    } else if (index === 1) {
+      cardType = "hero";
+    } else if (index === 2) {
+      cardType = slotTwoIsHero ? "evolution" : "hero";
+    }
+
+    return normalizeCard(card, cardType);
+  });
+
+  return classified;
 }
 
 function extractTowerCard(participant) {
@@ -36,15 +67,21 @@ function extractEightCardDeck(participant) {
   const cards = Array.isArray(participant && participant.cards) ? participant.cards : [];
   if (cards.length !== 8) return null;
 
-  const normalized = cards.map(normalizeCard);
-  const keys = normalized.map(cardKey);
+  // Preserve the raw API order while determining Hero/Evolution state.
+  const classified = classifyMainDeckCards(cards);
+  if (!classified) return null;
 
+  const keys = classified.map(cardKey);
   if (keys.some((key) => key == null) || new Set(keys).size !== 8) return null;
 
+  // Order does not define deck identity after the positional classification
+  // has been resolved, so normalize identity by sorting the classified keys.
   const identityKeys = [...keys].sort();
 
   return {
-    cards: normalized,
+    // Keep the original API order in the output so the resolved card states
+    // remain tied to their actual deck slots.
+    cards: classified,
     key: identityKeys.join("|"),
   };
 }
