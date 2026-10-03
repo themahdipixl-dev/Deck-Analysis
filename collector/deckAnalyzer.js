@@ -16,12 +16,20 @@ function cardKey(card) {
 }
 
 function normalizeCard(card, cardType = "normal") {
+  const iconUrls = (card && card.iconUrls) || {};
+  const iconUrl =
+    cardType === "evolution"
+      ? (iconUrls.evolutionMedium || iconUrls.medium || null)
+      : cardType === "hero"
+        ? (iconUrls.heroMedium || iconUrls.medium || null)
+        : (iconUrls.medium || null);
+
   return {
     id: card && card.id != null ? card.id : null,
     name: String((card && card.name) || "Unknown"),
     evolutionLevel: card && Number.isFinite(card.evolutionLevel) ? card.evolutionLevel : 0,
     cardType,
-    iconUrl: (card && card.iconUrls && card.iconUrls.medium) || null,
+    iconUrl,
   };
 }
 
