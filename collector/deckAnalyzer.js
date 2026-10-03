@@ -127,17 +127,16 @@ function resolveOutcome(context) {
   return "draw";
 }
 
-export function analyzeBattles(playerLogs, options = {}) {
+
+export function createDeckAnalyzer(options = {}) {
   const minGames = Math.max(1, Number(options.minGames || process.env.MIN_DECK_GAMES || DEFAULT_MIN_GAMES));
   const playerCap = Math.max(1, Number(options.playerCap || process.env.PLAYER_DECK_CAP || DEFAULT_PLAYER_CAP));
   const priorStrength = Number(options.priorStrength || process.env.PRIOR_STRENGTH || DEFAULT_PRIOR_STRENGTH);
   const priorWinRate = Number(options.priorWinRate || process.env.PRIOR_WIN_RATE || DEFAULT_PRIOR_WIN_RATE);
   const decks = new Map();
 
-  for (const item of playerLogs) {
-    const playerTag = item.playerTag;
-
-    for (const battle of item.battles || []) {
+  function addPlayerBattles(playerTag, battles) {
+    for (const battle of battles || []) {
       if (battle && battle.type !== "pathOfLegend") continue;
 
       const context = findPlayerParticipant(battle, playerTag);
@@ -185,50 +184,64 @@ export function analyzeBattles(playerLogs, options = {}) {
     }
   }
 
-  const ranked = [];
+  function getTopDecks() {
+    const ranked = [];
 
-  for (const stats of decks.values()) {
-    let effectiveGames = 0;
-    let effectiveWins = 0;
-    let effectiveLosses = 0;
+    for (const stats of decks.values()) {
+      let effectiveGames = 0;
+      let effectiveWins = 0;
+      let effectiveLosses = 0;
 
-    for (const playerStats of stats.players.values()) {
-      effectiveGames += playerStats.games;
-      effectiveWins += playerStats.wins;
-      effectiveLosses += playerStats.losses;
+      for (const playerStats of stats.players.values()) {
+        effectiveGames += playerStats.games;
+        effectiveWins += playerStats.wins;
+        effectiveLosses += playerStats.losses;
+      }
+
+      if (stats.games < minGames || effectiveGames < minGames) continue;
+
+      const decisiveGames = stats.wins + stats.losses;
+      const effectiveDecisiveGames = effectiveWins + effectiveLosses;
+      const winRate = decisiveGames > 0 ? stats.wins / decisiveGames : 0;
+      const adjustedWinRate = (
+        effectiveWins + priorStrength * priorWinRate
+      ) / (
+        effectiveDecisiveGames + priorStrength
+      );
+
+      ranked.push({
+        key: stats.key,
+        cards: stats.cards,
+        towerCard: stats.towerCard,
+        games: stats.games,
+        wins: stats.wins,
+        losses: stats.losses,
+        draws: stats.draws,
+        winRate: Number((winRate * 100).toFixed(2)),
+        adjustedWinRate: Number((adjustedWinRate * 100).toFixed(2)),
+        totalCrowns: stats.totalCrowns,
+      });
     }
 
-    if (stats.games < minGames || effectiveGames < minGames) continue;
-
-    const decisiveGames = stats.wins + stats.losses;
-    const effectiveDecisiveGames = effectiveWins + effectiveLosses;
-    const winRate = decisiveGames > 0 ? stats.wins / decisiveGames : 0;
-    const adjustedWinRate = (
-      effectiveWins + priorStrength * priorWinRate
-    ) / (
-      effectiveDecisiveGames + priorStrength
+    ranked.sort((a, b) =>
+      b.adjustedWinRate - a.adjustedWinRate ||
+      b.games - a.games ||
+      b.winRate - a.winRate ||
+      b.wins - a.wins
     );
 
-    ranked.push({
-      key: stats.key,
-      cards: stats.cards,
-      towerCard: stats.towerCard,
-      games: stats.games,
-      wins: stats.wins,
-      losses: stats.losses,
-      draws: stats.draws,
-      winRate: Number((winRate * 100).toFixed(2)),
-      adjustedWinRate: Number((adjustedWinRate * 100).toFixed(2)),
-      totalCrowns: stats.totalCrowns,
-    });
+    return ranked.slice(0, 30);
   }
 
-  ranked.sort((a, b) =>
-    b.adjustedWinRate - a.adjustedWinRate ||
-    b.games - a.games ||
-    b.winRate - a.winRate ||
-    b.wins - a.wins
-  );
+  return { addPlayerBattles, getTopDecks };
+}
 
-  return ranked.slice(0, 30);
+export function analyzeBattles(playerLogs, options = {}) {
+  const analyzer = createDeckAnalyzer(options);
+
+  for (const item of playerLogs || []) {
+    analyzer.addPlayerBattles(item.playerTag, item.battles || []);
+  }
+
+  return analyzer.getTopDecks();
 }
