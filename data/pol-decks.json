@@ -1,0 +1,20 @@
+{
+  "generatedAt": null,
+  "source": {
+    "ranking": "global_path_of_legend",
+    "playersRequested": 0,
+    "playersCollected": 0,
+    "battlelogsFailed": 0,
+    "battlesPerPlayer": 30
+  },
+  "methodology": {
+    "deckIdentity": "8 main cards; tower card excluded; evolutionLevel is part of card state",
+    "ranking": ["adjustedWinRate", "games", "winRate"],
+    "minimumGames": 20,
+    "perPlayerDeckCap": 10,
+    "priorStrength": 20,
+    "priorWinRate": 0.5,
+    "rawStatsUseAllEligibleBattles": true
+  },
+  "decks": []
+}

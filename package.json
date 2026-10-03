@@ -1,0 +1,7 @@
+{
+  "name": "deck-analysis",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": { "update": "node scripts/update.js" }
+}

@@ -1,0 +1,46 @@
+name: Update Deck Analysis
+
+on:
+  schedule:
+    - cron: "17 */3 * * *"
+  workflow_dispatch:
+    inputs:
+      players:
+        description: "Number of top Ranked / Path of Legend players to analyze"
+        required: false
+        default: "1000"
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deck-analysis-update
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Analyze decks
+        env:
+          PLAYERS: ${{ inputs.players || '1000' }}
+        run: npm run update
+      - name: Commit updated data
+        run: |
+          if git diff --quiet -- data/pol-decks.json; then
+            echo "No data changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/pol-decks.json
+          git commit -m "chore: update deck analysis data"
+          git push
