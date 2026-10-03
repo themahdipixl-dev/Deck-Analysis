@@ -104,11 +104,14 @@ console.log(
 const analyzer = createDeckAnalyzer();
 let completed = 0;
 let failed = 0;
+let battlesFetched = 0;
 
 await mapWithConcurrency(uniquePlayers, concurrency, async (player) => {
   try {
     const battles = await api.fetchBattlelog(player.tag);
-    analyzer.addPlayerBattles(player.tag, battles.slice(0, 30));
+    const selectedBattles = battles.slice(0, 30);
+    battlesFetched += selectedBattles.length;
+    analyzer.addPlayerBattles(player.tag, selectedBattles);
   } catch (error) {
     failed += 1;
     console.warn(
@@ -145,6 +148,7 @@ const output = {
     playersRequested: locations.length * playersPerLocation,
     playersCollected: uniquePlayers.length,
     battlelogsFailed: failed,
+    battlesFetched,
     battlesPerPlayer: 30,
     battlelogConcurrency: concurrency,
   },
@@ -161,6 +165,7 @@ const output = {
     rawStatsUseAllEligibleBattles: true,
     playerCollection: "top players are collected independently for every location, then deduplicated by player tag before battle-log analysis",
     processing: "battle logs are analyzed incrementally so the full multi-million-battle dataset is never held in memory at once",
+    diagnostics: analyzer.getDiagnostics(),
   },
   decks: topDecks,
 };
