@@ -134,16 +134,47 @@ export function createDeckAnalyzer(options = {}) {
   const priorStrength = Number(options.priorStrength || process.env.PRIOR_STRENGTH || DEFAULT_PRIOR_STRENGTH);
   const priorWinRate = Number(options.priorWinRate || process.env.PRIOR_WIN_RATE || DEFAULT_PRIOR_WIN_RATE);
   const decks = new Map();
+  const diagnostics = {
+    battlesSeen: 0,
+    pathOfLegendBattles: 0,
+    participantsFound: 0,
+    rejectedNoParticipant: 0,
+    rejectedInvalidMainDeck: 0,
+    rejectedNoTower: 0,
+    decksExtracted: 0,
+  };
 
   function addPlayerBattles(playerTag, battles) {
     for (const battle of battles || []) {
-      if (battle && battle.type !== "pathOfLegend") continue;
+      diagnostics.battlesSeen += 1;
+      if (!battle || battle.type !== "pathOfLegend") continue;
+      diagnostics.pathOfLegendBattles += 1;
 
       const context = findPlayerParticipant(battle, playerTag);
-      if (!context) continue;
+      if (!context) {
+        diagnostics.rejectedNoParticipant += 1;
+        continue;
+      }
+      diagnostics.participantsFound += 1;
 
-      const deck = extractDeck(context.participant);
-      if (!deck) continue;
+      const mainDeck = extractEightCardDeck(context.participant);
+      if (!mainDeck) {
+        diagnostics.rejectedInvalidMainDeck += 1;
+        continue;
+      }
+
+      const tower = extractTowerCard(context.participant);
+      if (!tower) {
+        diagnostics.rejectedNoTower += 1;
+        continue;
+      }
+
+      const deck = {
+        cards: mainDeck.cards,
+        towerCard: tower.card,
+        key: mainDeck.key + "|tower:" + tower.key,
+      };
+      diagnostics.decksExtracted += 1;
 
       const outcome = resolveOutcome(context);
       const crowns = Number((context.participant && context.participant.crowns) || 0);
@@ -233,7 +264,14 @@ export function createDeckAnalyzer(options = {}) {
     return ranked.slice(0, 30);
   }
 
-  return { addPlayerBattles, getTopDecks };
+  function getDiagnostics() {
+    return {
+      ...diagnostics,
+      uniqueDecks: decks.size,
+    };
+  }
+
+  return { addPlayerBattles, getTopDecks, getDiagnostics };
 }
 
 export function analyzeBattles(playerLogs, options = {}) {
