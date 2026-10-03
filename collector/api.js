@@ -9,14 +9,15 @@ function unwrapList(data) {
 
 export function createApi(options = {}) {
   const baseUrl = options.baseUrl || process.env.WORKER_BASE_URL || DEFAULT_BASE_URL;
-  const requestDelayMs = Number(options.requestDelayMs || process.env.REQUEST_DELAY_MS || 2000);
+  const requestDelayMs = Number(options.requestDelayMs ?? process.env.REQUEST_DELAY_MS ?? 0);
   const retries = Number(options.retries || process.env.REQUEST_RETRIES || 4);
-  let lastRequestAt = 0;
+  let nextRequestAt = 0;
 
   async function request(path) {
-    const wait = requestDelayMs - (Date.now() - lastRequestAt);
+    const now = Date.now();
+    const wait = Math.max(0, nextRequestAt - now);
+    nextRequestAt = Math.max(nextRequestAt, now) + Math.max(0, requestDelayMs);
     if (wait > 0) await sleep(wait);
-    lastRequestAt = Date.now();
 
     let lastError;
     for (let attempt = 1; attempt <= retries; attempt += 1) {
@@ -46,16 +47,26 @@ export function createApi(options = {}) {
   }
 
   return {
-    async fetchTopPolPlayers(limit = 1000) {
+    async fetchLocations() {
+      return unwrapList(await request("/api/locations"));
+    },
+
+    async fetchTopPolPlayers(locationId, limit = 1000) {
       const safeLimit = Math.min(1000, Math.max(1, limit));
+      if (!locationId) throw new Error("locationId is required");
       const data = await request(
-        "/api/pathoflegend?locationId=global&limit=" + safeLimit
+        "/api/pathoflegend?locationId=" +
+          encodeURIComponent(String(locationId)) +
+          "&limit=" +
+          safeLimit
       );
       return unwrapList(data);
     },
 
     async fetchBattlelog(tag) {
-      const data = await request("/api/player/" + encodeURIComponent(String(tag)) + "/battlelog");
+      const data = await request(
+        "/api/player/" + encodeURIComponent(String(tag)) + "/battlelog"
+      );
       return Array.isArray(data) ? data : unwrapList(data);
     },
   };
