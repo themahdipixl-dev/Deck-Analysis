@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T13:51:03.225Z",
+  "generatedAt": "2026-10-03T14:07:30.935Z",
   "source": {
     "ranking": "global_path_of_legend",
     "battleType": "pathOfLegend",
@@ -10,7 +10,7 @@
   },
   "methodology": {
     "deckIdentity": "8 main cards + tower card; main-card order ignored after positional Hero/Evolution classification; cardType and evolutionLevel are part of card state",
-    "cardTypeDetection": "positional; raw API order is preserved; slot 1 = evolution, slot 2 = hero, slot 3 = hero when slot 2 is not hero otherwise evolution; slots 4-8 = normal; iconUrls are not used for classification",
+    "cardTypeDetection": "matches My Royale Current Deck logic; raw API order is preserved; slot 1 = evolution; slot 2 = hero when heroMedium exists, otherwise normal; slot 3 = evolution when slot 2 is a Hero, otherwise hero; slots 4-8 = normal; evolutionLevel is not used alone to determine cardType",
     "battleFilter": "pathOfLegend only",
     "towerCardSource": "participant.supportCards[0]",
     "ranking": [
@@ -33,7 +33,7 @@
           "name": "Bats",
           "evolutionLevel": 1,
           "cardType": "evolution",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/EnIcvO21hxiNpoI-zO6MDjLmzwPbq8Z4JPo2OKoVUjU.png"
+          "iconUrl": "https://api-assets.clashroyale.com/cardevolutions/300/EnIcvO21hxiNpoI-zO6MDjLmzwPbq8Z4JPo2OKoVUjU.png"
         },
         {
           "id": 26000093,
@@ -57,6 +57,20 @@
           "iconUrl": "https://api-assets.clashroyale.com/cards/300/Y4yWvdwBCg2FpAZgs8T09Gy34WOwpLZW-ttL52Ae8NE.png"
         },
         {
+          "id": 28000015,
+          "name": "Barbarian Barrel",
+          "evolutionLevel": 0,
+          "cardType": "normal",
+          "iconUrl": "https://api-assets.clashroyale.com/cards/300/Gb0G1yNy0i5cIGUHin8uoFWxqntNtRPhY_jeMXg7HnA.png"
+        },
+        {
+          "id": 26000010,
+          "name": "Skeletons",
+          "evolutionLevel": 0,
+          "cardType": "normal",
+          "iconUrl": "https://api-assets.clashroyale.com/cards/300/oO7iKMU5m0cdxhYPZA3nWQiAUh2yoGgdThLWB1rVSec.png"
+        },
+        {
           "id": 26000101,
           "name": "Rune Giant",
           "evolutionLevel": 0,
@@ -69,6 +83,67 @@
           "evolutionLevel": 0,
           "cardType": "normal",
           "iconUrl": "https://api-assets.clashroyale.com/cards/300/98HDkG2189yOULcVG9jz2QbJKtfuhH21DIrIjkOjxI8.png"
+        }
+      ],
+      "towerCard": {
+        "id": 159000000,
+        "name": "Tower Princess",
+        "evolutionLevel": 0,
+        "cardType": "normal",
+        "iconUrl": "https://api-assets.clashroyale.com/cards/300/Nzo5Gjbh7NG6O3Hyu7ev54Pu5zK7vDMR2fbpGdVsS64.png"
+      },
+      "games": 28,
+      "wins": 24,
+      "losses": 4,
+      "draws": 0,
+      "winRate": 85.71,
+      "adjustedWinRate": 71.11,
+      "totalCrowns": 30
+    },
+    {
+      "key": "26000000:normal:0|26000001:evolution:1|26000010:normal:0|26000023:hero:2|26000107:normal:0|27000006:evolution:1|28000007:normal:0|28000015:normal:0|tower:159000000:normal:0",
+      "cards": [
+        {
+          "id": 26000001,
+          "name": "Archers",
+          "evolutionLevel": 1,
+          "cardType": "evolution",
+          "iconUrl": "https://api-assets.clashroyale.com/cardevolutions/300/W4Hmp8MTSdXANN8KdblbtHwtsbt0o749BbxNqmJYfA8.png"
+        },
+        {
+          "id": 26000023,
+          "name": "Ice Wizard",
+          "evolutionLevel": 2,
+          "cardType": "hero",
+          "iconUrl": "https://api-assets.clashroyale.com/cardheroes/300/W3dkw0HTw9n1jB-zbknY2w3wHuyuLxSRIAV5fUT1SEY.png"
+        },
+        {
+          "id": 27000006,
+          "name": "Tesla",
+          "evolutionLevel": 1,
+          "cardType": "evolution",
+          "iconUrl": "https://api-assets.clashroyale.com/cardevolutions/300/OiwnGrxFMNiHetYEerE-UZt0L_uYNzFY7qV_CA_OxR4.png"
+        },
+        {
+          "id": 26000107,
+          "name": "Minion Giant",
+          "evolutionLevel": 0,
+          "cardType": "normal",
+          "iconUrl": "https://api-assets.clashroyale.com/cards/300/VRjL0yVLzrnoe-IBh2l2fDHDok0L-UoM9cG-X_8xbMk.png"
+        },
+        {
+          "id": 26000000,
+          "name": "Knight",
+          "evolutionLevel": 0,
+          "cardType": "normal",
+          "iconUrl": "https://api-assets.clashroyale.com/cards/300/jAj1Q5rclXxU9kVImGqSJxa4wEMfEhvwNQ_4jiGUuqg.png"
+        },
+        {
+          "id": 28000007,
+          "name": "Lightning",
+          "evolutionLevel": 0,
+          "cardType": "normal",
+          "iconUrl": "https://api-assets.clashroyale.com/cards/300/fpnESbYqe5GyZmaVVYe-SEu7tE0Kxh_HZyVigzvLjks.png"
         },
         {
           "id": 26000010,
@@ -92,13 +167,13 @@
         "cardType": "normal",
         "iconUrl": "https://api-assets.clashroyale.com/cards/300/Nzo5Gjbh7NG6O3Hyu7ev54Pu5zK7vDMR2fbpGdVsS64.png"
       },
-      "games": 28,
-      "wins": 24,
-      "losses": 4,
+      "games": 65,
+      "wins": 53,
+      "losses": 12,
       "draws": 0,
-      "winRate": 85.71,
-      "adjustedWinRate": 71.11,
-      "totalCrowns": 30
+      "winRate": 81.54,
+      "adjustedWinRate": 70.49,
+      "totalCrowns": 58
     },
     {
       "key": "26000011:hero:2|26000012:evolution:1|26000026:normal:0|26000030:normal:0|26000040:normal:0|26000058:normal:0|27000006:normal:0|28000004:evolution:1|tower:159000000:normal:0",
@@ -108,21 +183,21 @@
           "name": "Goblin Barrel",
           "evolutionLevel": 1,
           "cardType": "evolution",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/CoZdp5PpsTH858l212lAMeJxVJ0zxv9V-f5xC8Bvj5g.png"
+          "iconUrl": "https://api-assets.clashroyale.com/cardevolutions/300/CoZdp5PpsTH858l212lAMeJxVJ0zxv9V-f5xC8Bvj5g.png"
         },
         {
           "id": 26000011,
           "name": "Valkyrie",
           "evolutionLevel": 2,
           "cardType": "hero",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/0lIoYf3Y_plFTzo95zZL93JVxpfb3MMgFDDhgSDGU9A.png"
+          "iconUrl": "https://api-assets.clashroyale.com/cardheroes/300/0lIoYf3Y_plFTzo95zZL93JVxpfb3MMgFDDhgSDGU9A.png"
         },
         {
           "id": 26000012,
           "name": "Skeleton Army",
           "evolutionLevel": 1,
           "cardType": "evolution",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/fAOToOi1pRy7svN2xQS6mDkhQw2pj9m_17FauaNqyl4.png"
+          "iconUrl": "https://api-assets.clashroyale.com/cardevolutions/300/fAOToOi1pRy7svN2xQS6mDkhQw2pj9m_17FauaNqyl4.png"
         },
         {
           "id": 26000058,
@@ -176,81 +251,6 @@
       "totalCrowns": 110
     },
     {
-      "key": "26000000:normal:0|26000001:evolution:1|26000010:normal:0|26000023:hero:2|26000107:normal:0|27000006:evolution:1|28000007:normal:0|28000015:normal:0|tower:159000000:normal:0",
-      "cards": [
-        {
-          "id": 26000001,
-          "name": "Archers",
-          "evolutionLevel": 1,
-          "cardType": "evolution",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/W4Hmp8MTSdXANN8KdblbtHwtsbt0o749BbxNqmJYfA8.png"
-        },
-        {
-          "id": 26000023,
-          "name": "Ice Wizard",
-          "evolutionLevel": 2,
-          "cardType": "hero",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/W3dkw0HTw9n1jB-zbknY2w3wHuyuLxSRIAV5fUT1SEY.png"
-        },
-        {
-          "id": 27000006,
-          "name": "Tesla",
-          "evolutionLevel": 1,
-          "cardType": "evolution",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/OiwnGrxFMNiHetYEerE-UZt0L_uYNzFY7qV_CA_OxR4.png"
-        },
-        {
-          "id": 26000107,
-          "name": "Minion Giant",
-          "evolutionLevel": 0,
-          "cardType": "normal",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/VRjL0yVLzrnoe-IBh2l2fDHDok0L-UoM9cG-X_8xbMk.png"
-        },
-        {
-          "id": 26000000,
-          "name": "Knight",
-          "evolutionLevel": 0,
-          "cardType": "normal",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/jAj1Q5rclXxU9kVImGqSJxa4wEMfEhvwNQ_4jiGUuqg.png"
-        },
-        {
-          "id": 28000007,
-          "name": "Lightning",
-          "evolutionLevel": 0,
-          "cardType": "normal",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/fpnESbYqe5GyZmaVVYe-SEu7tE0Kxh_HZyVigzvLjks.png"
-        },
-        {
-          "id": 26000010,
-          "name": "Skeletons",
-          "evolutionLevel": 0,
-          "cardType": "normal",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/oO7iKMU5m0cdxhYPZA3nWQiAUh2yoGgdThLWB1rVSec.png"
-        },
-        {
-          "id": 28000015,
-          "name": "Barbarian Barrel",
-          "evolutionLevel": 0,
-          "cardType": "normal",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/Gb0G1yNy0i5cIGUHin8uoFWxqntNtRPhY_jeMXg7HnA.png"
-        }
-      ],
-      "towerCard": {
-        "id": 159000000,
-        "name": "Tower Princess",
-        "evolutionLevel": 0,
-        "cardType": "normal",
-        "iconUrl": "https://api-assets.clashroyale.com/cards/300/Nzo5Gjbh7NG6O3Hyu7ev54Pu5zK7vDMR2fbpGdVsS64.png"
-      },
-      "games": 69,
-      "wins": 54,
-      "losses": 15,
-      "draws": 0,
-      "winRate": 78.26,
-      "adjustedWinRate": 68.18,
-      "totalCrowns": 59
-    },
-    {
       "key": "26000036:evolution:1|26000042:normal:0|26000046:normal:0|26000050:normal:0|26000074:normal:0|26000083:normal:0|26000106:normal:0|28000008:hero:1|tower:159000000:normal:0",
       "cards": [
         {
@@ -258,7 +258,7 @@
           "name": "Battle Ram",
           "evolutionLevel": 1,
           "cardType": "evolution",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/dyc50V2cplKi4H7pq1B3I36pl_sEH5DQrNHboS_dbbM.png"
+          "iconUrl": "https://api-assets.clashroyale.com/cardevolutions/300/dyc50V2cplKi4H7pq1B3I36pl_sEH5DQrNHboS_dbbM.png"
         },
         {
           "id": 26000074,
@@ -275,18 +275,11 @@
           "iconUrl": "https://api-assets.clashroyale.com/cards/300/7dxh2-yCBy1x44GrBaL29vjqnEEeJXHEAlsi5g6D1eY.png"
         },
         {
-          "id": 26000050,
-          "name": "Royal Ghost",
+          "id": 26000106,
+          "name": "Ronin",
           "evolutionLevel": 0,
           "cardType": "normal",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/3En2cz0ISQAaMTHY3hj3rTveFN2kJYq-H4VxvdJNvCM.png"
-        },
-        {
-          "id": 26000083,
-          "name": "Mother Witch",
-          "evolutionLevel": 0,
-          "cardType": "normal",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/fO-Xah8XZkYKaSK9SCp3wnzwxtvIhun9NVY-zzte1Ng.png"
+          "iconUrl": "https://api-assets.clashroyale.com/cards/300/X0dTFs7OGUavreDEzOtYd_YNZ8Zly6qgAE-dd-bNfWU.png"
         },
         {
           "id": 26000042,
@@ -296,11 +289,18 @@
           "iconUrl": "https://api-assets.clashroyale.com/cards/300/RsFaHgB3w6vXsTjXdPr3x8l_GbV9TbOUCvIx07prbrQ.png"
         },
         {
-          "id": 26000106,
-          "name": "Ronin",
+          "id": 26000083,
+          "name": "Mother Witch",
           "evolutionLevel": 0,
           "cardType": "normal",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/X0dTFs7OGUavreDEzOtYd_YNZ8Zly6qgAE-dd-bNfWU.png"
+          "iconUrl": "https://api-assets.clashroyale.com/cards/300/fO-Xah8XZkYKaSK9SCp3wnzwxtvIhun9NVY-zzte1Ng.png"
+        },
+        {
+          "id": 26000050,
+          "name": "Royal Ghost",
+          "evolutionLevel": 0,
+          "cardType": "normal",
+          "iconUrl": "https://api-assets.clashroyale.com/cards/300/3En2cz0ISQAaMTHY3hj3rTveFN2kJYq-H4VxvdJNvCM.png"
         },
         {
           "id": 26000046,
@@ -317,13 +317,13 @@
         "cardType": "normal",
         "iconUrl": "https://api-assets.clashroyale.com/cards/300/Nzo5Gjbh7NG6O3Hyu7ev54Pu5zK7vDMR2fbpGdVsS64.png"
       },
-      "games": 54,
-      "wins": 39,
+      "games": 56,
+      "wins": 41,
       "losses": 15,
       "draws": 0,
-      "winRate": 72.22,
-      "adjustedWinRate": 66.07,
-      "totalCrowns": 66
+      "winRate": 73.21,
+      "adjustedWinRate": 67.86,
+      "totalCrowns": 69
     },
     {
       "key": "26000042:normal:0|26000044:normal:0|26000074:normal:0|26000103:hero:0|26000106:normal:0|27000010:normal:0|28000008:evolution:1|28000016:normal:0|tower:159000000:normal:0",
@@ -333,7 +333,7 @@
           "name": "Zap",
           "evolutionLevel": 1,
           "cardType": "evolution",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/7dxh2-yCBy1x44GrBaL29vjqnEEeJXHEAlsi5g6D1eY.png"
+          "iconUrl": "https://api-assets.clashroyale.com/cardevolutions/300/7dxh2-yCBy1x44GrBaL29vjqnEEeJXHEAlsi5g6D1eY.png"
         },
         {
           "id": 26000074,
@@ -392,13 +392,13 @@
         "cardType": "normal",
         "iconUrl": "https://api-assets.clashroyale.com/cards/300/Nzo5Gjbh7NG6O3Hyu7ev54Pu5zK7vDMR2fbpGdVsS64.png"
       },
-      "games": 48,
-      "wins": 34,
+      "games": 50,
+      "wins": 36,
       "losses": 14,
       "draws": 0,
-      "winRate": 70.83,
+      "winRate": 72,
       "adjustedWinRate": 65,
-      "totalCrowns": 56
+      "totalCrowns": 58
     },
     {
       "key": "26000010:normal:0|26000049:evolution:1|26000093:normal:0|26000101:normal:0|26000107:normal:0|27000000:hero:1|28000009:normal:0|28000015:normal:0|tower:159000000:normal:0",
@@ -408,7 +408,7 @@
           "name": "Bats",
           "evolutionLevel": 1,
           "cardType": "evolution",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/EnIcvO21hxiNpoI-zO6MDjLmzwPbq8Z4JPo2OKoVUjU.png"
+          "iconUrl": "https://api-assets.clashroyale.com/cardevolutions/300/EnIcvO21hxiNpoI-zO6MDjLmzwPbq8Z4JPo2OKoVUjU.png"
         },
         {
           "id": 26000093,
@@ -467,13 +467,13 @@
         "cardType": "normal",
         "iconUrl": "https://api-assets.clashroyale.com/cards/300/Nzo5Gjbh7NG6O3Hyu7ev54Pu5zK7vDMR2fbpGdVsS64.png"
       },
-      "games": 69,
-      "wins": 47,
-      "losses": 22,
+      "games": 65,
+      "wins": 44,
+      "losses": 21,
       "draws": 0,
-      "winRate": 68.12,
-      "adjustedWinRate": 64.79,
-      "totalCrowns": 74
+      "winRate": 67.69,
+      "adjustedWinRate": 63.49,
+      "totalCrowns": 70
     },
     {
       "key": "26000010:normal:0|26000021:normal:0|26000064:evolution:1|26000065:normal:0|26000084:normal:0|27000006:hero:1|28000014:normal:0|28000015:normal:0|tower:159000000:normal:0",
@@ -483,7 +483,7 @@
           "name": "Firecracker",
           "evolutionLevel": 1,
           "cardType": "evolution",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/c1rL3LO1U2D9-TkeFfAC18gP3AO8ztSwrcHMZplwL2Q.png"
+          "iconUrl": "https://api-assets.clashroyale.com/cardevolutions/300/c1rL3LO1U2D9-TkeFfAC18gP3AO8ztSwrcHMZplwL2Q.png"
         },
         {
           "id": 26000065,
@@ -558,7 +558,7 @@
           "name": "Cannon",
           "evolutionLevel": 1,
           "cardType": "evolution",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/nZK1y-beLxO5vnlyUhK6-2zH2NzXJwqykcosqQ1cmZ8.png"
+          "iconUrl": "https://api-assets.clashroyale.com/cardevolutions/300/nZK1y-beLxO5vnlyUhK6-2zH2NzXJwqykcosqQ1cmZ8.png"
         },
         {
           "id": 26000093,
@@ -617,13 +617,13 @@
         "cardType": "normal",
         "iconUrl": "https://api-assets.clashroyale.com/cards/300/Nzo5Gjbh7NG6O3Hyu7ev54Pu5zK7vDMR2fbpGdVsS64.png"
       },
-      "games": 70,
-      "wins": 46,
-      "losses": 24,
+      "games": 65,
+      "wins": 43,
+      "losses": 22,
       "draws": 0,
-      "winRate": 65.71,
+      "winRate": 66.15,
       "adjustedWinRate": 63.33,
-      "totalCrowns": 55
+      "totalCrowns": 52
     },
     {
       "key": "26000009:normal:0|26000039:hero:2|26000052:normal:0|26000063:evolution:1|26000074:evolution:0|27000007:normal:0|28000012:normal:0|28000015:normal:0|tower:159000000:normal:0",
@@ -633,14 +633,14 @@
           "name": "Electro Dragon",
           "evolutionLevel": 1,
           "cardType": "evolution",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/tN9h6lnMNPCNsx0LMFmvpHgznbDZ1fBRkx-C7UfNmfY.png"
+          "iconUrl": "https://api-assets.clashroyale.com/cardevolutions/300/tN9h6lnMNPCNsx0LMFmvpHgznbDZ1fBRkx-C7UfNmfY.png"
         },
         {
           "id": 26000039,
           "name": "Mega Minion",
           "evolutionLevel": 2,
           "cardType": "hero",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/-T_e4YLbuhPBKbYnBwQfXgynNpp5eOIN_0RracYwL9c.png"
+          "iconUrl": "https://api-assets.clashroyale.com/cardheroes/300/-T_e4YLbuhPBKbYnBwQfXgynNpp5eOIN_0RracYwL9c.png"
         },
         {
           "id": 26000074,
@@ -692,88 +692,13 @@
         "cardType": "normal",
         "iconUrl": "https://api-assets.clashroyale.com/cards/300/Nzo5Gjbh7NG6O3Hyu7ev54Pu5zK7vDMR2fbpGdVsS64.png"
       },
-      "games": 34,
-      "wins": 23,
-      "losses": 11,
+      "games": 36,
+      "wins": 24,
+      "losses": 12,
       "draws": 0,
-      "winRate": 67.65,
+      "winRate": 66.67,
       "adjustedWinRate": 60,
-      "totalCrowns": 40
-    },
-    {
-      "key": "26000036:hero:1|26000042:normal:0|26000046:normal:0|26000050:normal:0|26000074:normal:0|26000083:normal:0|26000106:normal:0|28000008:evolution:1|tower:159000000:normal:0",
-      "cards": [
-        {
-          "id": 28000008,
-          "name": "Zap",
-          "evolutionLevel": 1,
-          "cardType": "evolution",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/7dxh2-yCBy1x44GrBaL29vjqnEEeJXHEAlsi5g6D1eY.png"
-        },
-        {
-          "id": 26000074,
-          "name": "Golden Knight",
-          "evolutionLevel": 0,
-          "cardType": "normal",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/WJd207D0O1sN-l1FTb8P9KhYL2oF5jY26vRUfTUW3FQ.png"
-        },
-        {
-          "id": 26000036,
-          "name": "Battle Ram",
-          "evolutionLevel": 1,
-          "cardType": "hero",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/dyc50V2cplKi4H7pq1B3I36pl_sEH5DQrNHboS_dbbM.png"
-        },
-        {
-          "id": 26000106,
-          "name": "Ronin",
-          "evolutionLevel": 0,
-          "cardType": "normal",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/X0dTFs7OGUavreDEzOtYd_YNZ8Zly6qgAE-dd-bNfWU.png"
-        },
-        {
-          "id": 26000042,
-          "name": "Electro Wizard",
-          "evolutionLevel": 0,
-          "cardType": "normal",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/RsFaHgB3w6vXsTjXdPr3x8l_GbV9TbOUCvIx07prbrQ.png"
-        },
-        {
-          "id": 26000083,
-          "name": "Mother Witch",
-          "evolutionLevel": 0,
-          "cardType": "normal",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/fO-Xah8XZkYKaSK9SCp3wnzwxtvIhun9NVY-zzte1Ng.png"
-        },
-        {
-          "id": 26000046,
-          "name": "Bandit",
-          "evolutionLevel": 0,
-          "cardType": "normal",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/QWDdXMKJNpv0go-HYaWQWP6p8uIOHjqn-zX7G0p3DyM.png"
-        },
-        {
-          "id": 26000050,
-          "name": "Royal Ghost",
-          "evolutionLevel": 0,
-          "cardType": "normal",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/3En2cz0ISQAaMTHY3hj3rTveFN2kJYq-H4VxvdJNvCM.png"
-        }
-      ],
-      "towerCard": {
-        "id": 159000000,
-        "name": "Tower Princess",
-        "evolutionLevel": 0,
-        "cardType": "normal",
-        "iconUrl": "https://api-assets.clashroyale.com/cards/300/Nzo5Gjbh7NG6O3Hyu7ev54Pu5zK7vDMR2fbpGdVsS64.png"
-      },
-      "games": 20,
-      "wins": 12,
-      "losses": 8,
-      "draws": 0,
-      "winRate": 60,
-      "adjustedWinRate": 55,
-      "totalCrowns": 25
+      "totalCrowns": 41
     },
     {
       "key": "26000010:normal:0|26000032:normal:0|26000049:hero:1|26000093:normal:0|26000101:normal:0|27000000:evolution:1|28000009:normal:0|28000015:normal:0|tower:159000000:normal:0",
@@ -783,7 +708,7 @@
           "name": "Cannon",
           "evolutionLevel": 1,
           "cardType": "evolution",
-          "iconUrl": "https://api-assets.clashroyale.com/cards/300/nZK1y-beLxO5vnlyUhK6-2zH2NzXJwqykcosqQ1cmZ8.png"
+          "iconUrl": "https://api-assets.clashroyale.com/cardevolutions/300/nZK1y-beLxO5vnlyUhK6-2zH2NzXJwqykcosqQ1cmZ8.png"
         },
         {
           "id": 26000093,
