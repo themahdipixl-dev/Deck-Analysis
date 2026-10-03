@@ -66,7 +66,7 @@ const output = {
   },
   methodology: {
     deckIdentity: "8 main cards + tower card; main-card order ignored after positional Hero/Evolution classification; cardType and evolutionLevel are part of card state",
-    cardTypeDetection: "matches My Royale Current Deck logic; raw API order is preserved; slot 1 = evolution; slot 2 = hero when heroMedium exists, otherwise normal; slot 3 = evolution when slot 2 is a Hero, otherwise hero; slots 4-8 = normal; evolutionLevel is not used alone to determine cardType",
+    cardTypeDetection: "uses evolutionLevel from the active currentDeck or played battle-log card entry: 1 = evolution, 2 = hero, missing/0/other = normal; iconUrls are used only to select the corresponding image asset",
     battleFilter: "pathOfLegend only",
     towerCardSource: "participant.supportCards[0]",
     ranking: ["adjustedWinRate", "games", "winRate"],
