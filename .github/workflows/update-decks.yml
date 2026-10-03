@@ -35,12 +35,21 @@ jobs:
         run: npm run update
       - name: Commit updated data
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # The workflow may have started from an older commit while
+          # another change was pushed to main during analysis.
+          # Move HEAD to the latest remote main while keeping the
+          # newly generated data file in the working tree.
+          git fetch origin main
+          git reset --mixed origin/main
+
           if git diff --quiet -- data/pol-decks.json; then
             echo "No data changes."
             exit 0
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add data/pol-decks.json
           git commit -m "chore: update deck analysis data"
-          git push
+          git push origin HEAD:main
