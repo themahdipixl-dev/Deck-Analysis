@@ -66,6 +66,7 @@ const output = {
   },
   methodology: {
     deckIdentity: "8 main cards + tower card; main-card order ignored after positional Hero/Evolution classification; cardType and evolutionLevel are part of card state",
+    cardTypeDetection: "positional; raw API order is preserved; first 3 slots are classified by evolutionLevel: slot 1 can only be evolution, slot 2 can only be hero, slot 3 is hero when slot 2 is not hero otherwise evolution; slots 4-8 are normal; iconUrls are not used for classification",
     cardTypeDetection: "positional; raw API order is preserved; slot 1 = evolution, slot 2 = hero, slot 3 = hero when slot 2 is not hero otherwise evolution; slots 4-8 = normal; iconUrls are not used for classification",
     battleFilter: "pathOfLegend only",
     towerCardSource: "participant.supportCards[0]",
