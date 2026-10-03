@@ -26,22 +26,27 @@ function normalizeCard(card, cardType = "normal") {
 }
 
 function classifyMainDeckCards(cards) {
-  // The raw API order is meaningful. Classification must happen before
-  // any sorting because the first three slots determine Hero/Evolution state:
-  // slot 1 = Evolution, slot 2 = Hero, slot 3 = Hero when slot 2 is not
-  // Hero, otherwise Evolution. Slots 4-8 are always normal.
+  // Raw API order is meaningful. Determine the active form from the first
+  // three slots before sorting. iconUrls are intentionally ignored.
   if (!Array.isArray(cards) || cards.length !== 8) return null;
 
-  const slotTwoIsHero = false; // slot 2 is unconditionally the Hero slot.
+  const isHero = (card) => Number(card && card.evolutionLevel) === 2;
+  const isEvolution = (card) => Number(card && card.evolutionLevel) === 1;
+  const slotTwoIsHero = isHero(cards[1]);
+
   const classified = cards.map((card, index) => {
     let cardType = "normal";
 
     if (index === 0) {
-      cardType = "evolution";
+      if (isEvolution(card)) cardType = "evolution";
     } else if (index === 1) {
-      cardType = "hero";
+      if (isHero(card)) cardType = "hero";
     } else if (index === 2) {
-      cardType = slotTwoIsHero ? "evolution" : "hero";
+      if (slotTwoIsHero) {
+        if (isEvolution(card)) cardType = "evolution";
+      } else if (isHero(card)) {
+        cardType = "hero";
+      }
     }
 
     return normalizeCard(card, cardType);
