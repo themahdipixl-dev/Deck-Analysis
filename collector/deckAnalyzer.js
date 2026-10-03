@@ -19,13 +19,48 @@ function normalizeCard(card) {
   };
 }
 
+function extractTowerCard(participant) {
+  const supportCards = Array.isArray(participant && participant.supportCards)
+    ? participant.supportCards
+    : [];
+  if (!supportCards.length) return null;
+
+  const tower = normalizeCard(supportCards[0]);
+  const key = cardKey(tower);
+  if (key == null) return null;
+
+  return { card: tower, key };
+}
+
 function extractEightCardDeck(participant) {
   const cards = Array.isArray(participant && participant.cards) ? participant.cards : [];
   if (cards.length !== 8) return null;
+
   const normalized = cards.map(normalizeCard);
   const keys = normalized.map(cardKey);
+
   if (keys.some((key) => key == null) || new Set(keys).size !== 8) return null;
-  return { cards: normalized, key: keys.join("|") };
+
+  const identityKeys = [...keys].sort();
+
+  return {
+    cards: normalized,
+    key: identityKeys.join("|"),
+  };
+}
+
+function extractDeck(participant) {
+  const mainDeck = extractEightCardDeck(participant);
+  if (!mainDeck) return null;
+
+  const tower = extractTowerCard(participant);
+  if (!tower) return null;
+
+  return {
+    cards: mainDeck.cards,
+    towerCard: tower.card,
+    key: mainDeck.key + "|tower:" + tower.key,
+  };
 }
 
 function findPlayerParticipant(battle, playerTag) {
@@ -48,9 +83,6 @@ function sideScore(entries) {
 function resolveOutcome(context) {
   const participant = context.participant;
 
-  if (typeof participant.boatBattleWon === "boolean") {
-    return participant.boatBattleWon ? "win" : "loss";
-  }
   if (typeof participant.trophyChange === "number" && participant.trophyChange !== 0) {
     return participant.trophyChange > 0 ? "win" : "loss";
   }
@@ -71,11 +103,14 @@ export function analyzeBattles(playerLogs, options = {}) {
 
   for (const item of playerLogs) {
     const playerTag = item.playerTag;
+
     for (const battle of item.battles || []) {
+      if (battle && battle.type !== "pathOfLegend") continue;
+
       const context = findPlayerParticipant(battle, playerTag);
       if (!context) continue;
 
-      const deck = extractEightCardDeck(context.participant);
+      const deck = extractDeck(context.participant);
       if (!deck) continue;
 
       const outcome = resolveOutcome(context);
@@ -86,6 +121,7 @@ export function analyzeBattles(playerLogs, options = {}) {
         stats = {
           key: deck.key,
           cards: deck.cards,
+          towerCard: deck.towerCard,
           games: 0,
           wins: 0,
           losses: 0,
@@ -143,6 +179,7 @@ export function analyzeBattles(playerLogs, options = {}) {
     ranked.push({
       key: stats.key,
       cards: stats.cards,
+      towerCard: stats.towerCard,
       games: stats.games,
       wins: stats.wins,
       losses: stats.losses,
